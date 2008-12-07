@@ -17,8 +17,8 @@
 		
 		public function addFish(f:Fish) : void {
 			addActor(f);
-			f.x = 30;
-			f.y = 80;
+			f.x = -100;
+			f.y = 280;
 		}
 		
 		public override function update() : void {
