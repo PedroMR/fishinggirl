@@ -52,6 +52,8 @@
 			setVelocity(0, 0);
 			target = new Point(x + 150, y);
 			
+			scaleX = scaleY = Math.random() * 0.3 + 0.85;
+			
 		}
 		
 		public override function update() : void 
@@ -87,10 +89,10 @@
 					chooseTarget();
 				}
 			}
-			if ((vx > VEL_FLIP_CHANGE && scaleX > -1)) {
-				scaleX -= DSCALE_FLIP_CHANGE;
-			} else if ((vx < VEL_FLIP_CHANGE && scaleX < 1)) {
-				scaleX += DSCALE_FLIP_CHANGE;
+			if ((vx > VEL_FLIP_CHANGE && sprite.scaleX > -1)) {
+				sprite.scaleX -= DSCALE_FLIP_CHANGE;
+			} else if ((vx < VEL_FLIP_CHANGE && sprite.scaleX < 1)) {
+				sprite.scaleX += DSCALE_FLIP_CHANGE;
 			}
 			
 			/*

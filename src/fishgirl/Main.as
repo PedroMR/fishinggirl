@@ -17,10 +17,9 @@
 		
 		internal var actors:Array;
 		
-		internal var backdrop:Backdrop;
-		internal var ocean:Ocean;
+		public var world:World;
 		
-		internal var keysheld:Array = [];
+		public static var keysheld:Array = [];
 		
 		public function Main():void 
 		{
@@ -29,7 +28,9 @@
 		}
 		
 		public function handleKeyDown(e:KeyboardEvent = null) :void {
+			trace("down " + e.keyCode);
 			keysheld[e.keyCode] = true;
+			keysheld[e.charCode] = true;
 		}
 		
 		public function handleKeyUp(e:KeyboardEvent=null) :void {
@@ -43,19 +44,13 @@
 			
 			trace("init");
 			
+			world = new World();
+			addChild(world);
+			
 			stage.addEventListener(KeyboardEvent.KEY_DOWN, handleKeyDown);
 			stage.addEventListener(KeyboardEvent.KEY_UP, handleKeyUp);
 
 			actors = [];
-			
-			backdrop = new Backdrop();
-			addChild(backdrop);
-			
-			ocean = new Ocean;
-			ocean.y = 300;
-			ocean.x = 100;
-			ocean.scaleX = ocean.scaleY = 1;
-			addChild(ocean);
 			
 			addEventListener(Event.ENTER_FRAME, updateFrame);
 		}
@@ -67,14 +62,7 @@
 		
 		private function updateFrame(e:Event = null):void
 		{
-			var vel_cam:Number = 10;
-			if (keysheld[Keyboard.LEFT]) x += vel_cam;
-			if (keysheld[Keyboard.RIGHT]) x -= vel_cam;
-			if (keysheld[Keyboard.UP]) y += vel_cam;
-			if (keysheld[Keyboard.DOWN]) y -= vel_cam;
-			
-			backdrop.update();
-			ocean.update();
+			world.update();
 			
 			for each (var a:Actor in actors) {
 				trace(a);
