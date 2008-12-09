@@ -69,6 +69,9 @@
 		
 		[Embed(source = '../../res/FishingGirl.swf', symbol = 'Bird')] public static var bird:Class;
 		
+		// PNGs
+		[Embed(source = '../../res/heart1.png')] public static var heart:Class;
+		
 		internal function traceInto(obj:Object, pref:String) : void {
 			if (obj is DisplayObjectContainer) {
 				var mc:DisplayObjectContainer = obj as DisplayObjectContainer;
