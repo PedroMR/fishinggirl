@@ -10,6 +10,7 @@
 	{
 		public var ocean:Ocean;
 		public var backdrop:Backdrop;
+		public var town:Town;
 		
 		internal var camera:Camera;
 		
@@ -25,6 +26,11 @@
 			ocean.x = 100;
 			ocean.scaleX = ocean.scaleY = 1;
 			addChild(ocean);
+			
+			town = new Town();
+			town.y = ocean.y - 20;
+			town.x = ocean.x;
+			addChild(town);
 			
 		}
 		
@@ -45,6 +51,7 @@
 			camera.update(Main.keysheld[Keyboard.LEFT], Main.keysheld[Keyboard.UP], Main.keysheld[Keyboard.RIGHT], Main.keysheld[Keyboard.DOWN], Keyboard.capsLock?1:2);
 			backdrop.update();
 			ocean.update();
+			town.update();
 
 		}
 		
@@ -52,6 +59,7 @@
 			if (dx != 0 || dy != 0) {
 				backdrop.moveCamera(dx, dy);
 				ocean.moveCamera(dx, dy);
+				town.moveCamera(dx, dy);
 			}
 		}
 	}

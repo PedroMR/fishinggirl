@@ -51,6 +51,16 @@
 		
 		[Embed(source = '../../res/FishingGirl.swf', symbol = 'airBubble')] public static var airBubble:Class;
 		
+		[Embed(source = '../../res/FishingGirl.swf', symbol = 'topper2x1')] public static var topper2x1:Class;
+		[Embed(source = '../../res/FishingGirl.swf', symbol = 'topper1x1')] public static var topper1x1:Class;
+		[Embed(source = '../../res/FishingGirl.swf', symbol = 'trophyHouse2')] public static var trophyHouse2:Class;
+		[Embed(source = '../../res/FishingGirl.swf', symbol = 'trophyHouse1x1')] public static var trophyHouse1x1:Class;
+		[Embed(source = '../../res/FishingGirl.swf', symbol = 'Sun')] public static var Sun:Class;
+		[Embed(source = '../../res/FishingGirl.swf', symbol = 'Grass1')] public static var Grass1:Class;
+		[Embed(source = '../../res/FishingGirl.swf', symbol = 'MidTree')] public static var MidTree:Class;
+		[Embed(source = '../../res/FishingGirl.swf', symbol = 'MidTree2')] public static var MidTree2:Class;
+		[Embed(source = '../../res/FishingGirl.swf', symbol = 'FarTree')] public static var FarTree:Class;
+		[Embed(source = '../../res/FishingGirl.swf', symbol = 'FarTree2')] public static var FarTree2:Class;
 		
 		
 		[Embed(source = '../../res/FishingGirl.swf', symbol = 'characterPinkBear')] public static var pinkBear:Class;

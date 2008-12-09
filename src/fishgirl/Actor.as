@@ -22,6 +22,8 @@
 		{
 			tick = 0;
 			z = 1;
+			vx = 0;
+			vy = 0;
 		}
 		
 		public function setVelocity( vx:Number, vy:Number ) : void {

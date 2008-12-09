@@ -28,7 +28,7 @@
 		}
 		
 		public function handleKeyDown(e:KeyboardEvent = null) :void {
-			trace("down " + e.keyCode);
+			if(keysheld[Keyboard.F12]) trace("down " + e.keyCode);
 			keysheld[e.keyCode] = true;
 			keysheld[e.charCode] = true;
 		}

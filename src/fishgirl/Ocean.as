@@ -11,7 +11,7 @@
 	{
 		public static const MIN_X:Number = 0;
 		public static const MAX_X:Number = 1200;
-		public static const MAX_DEPTH:Number = 900;
+		public static const MAX_DEPTH:Number = 1400;
 		
 		public static const depthRanges:Array = [ 
 			[ 0.05, 0.35 ],
@@ -22,7 +22,7 @@
 		
 		public function Ocean() 
 		{
-			addChild(new DancGraphics.waterbackground1());
+			//addChild(new DancGraphics.waterbackground1());
 		
 			for (var i:int = 0; i < 50; i++ )
 				spawn();

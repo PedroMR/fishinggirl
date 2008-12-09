@@ -25,13 +25,15 @@
 			var xx:Number;
 			var a:Actor;
 			var i:uint = 0;
-			for (xx = -250; xx < 3000; xx += a.width) {
-				a = new Mountain(Mountain.FAR, (i++)%3, xx, 0);
-				far.addActor(a);
-			}
 			far.z = 24;
 			far.y += 0;
 			addActor(far);
+			for (xx = -250; xx < 3000; xx += a.width) {
+				a = new Mountain(Mountain.FAR, (i++) % 3, xx, 0);
+				far.addActor(a);
+				
+				//for (var j:uint = 0; j < 30; j++ ) (a as Mountain).addTree();
+			}
 
 			mid = new ActorContainer();
 			i = 0;
@@ -41,9 +43,7 @@
 			}
 			mid.z = 8;
 			mid.y += 200;
-			addActor(mid);
-			
-			
+			addActor(mid);			
 			
 			/**
 			
