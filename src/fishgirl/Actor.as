@@ -18,12 +18,13 @@
 		 */
 		public var z:Number;
 		
-		public function Actor() 
+		public function Actor(spr:Sprite=null) 
 		{
 			tick = 0;
 			z = 1;
 			vx = 0;
 			vy = 0;
+			if(spr != null) addChild(spr);
 		}
 		
 		public function setVelocity( vx:Number, vy:Number ) : void {

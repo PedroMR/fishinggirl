@@ -11,7 +11,7 @@
 		public var ocean:Ocean;
 		public var backdrop:Backdrop;
 		public var town:Town;
-		public var player:Bear;
+		public var player:FishingBear;
 		public var groupie:Bear;
 		
 		internal var camera:Camera;
@@ -34,7 +34,7 @@
 			town.x = ocean.x;
 			addActor(town);
 			
-			player = new Bear(Bear.PINK);
+			player = new FishingBear(Bear.PINK);
 			player.x = ocean.x;
 			player.y = town.y;
 			addActor(player);
@@ -46,19 +46,6 @@
 		}
 		
 		public override function update() : void {
-			/*
-			var vel_cam:Number = Keyboard.capsLock ? 5 : 20;
-			var dx:Number = 0, dy:Number = 0;
-			if (Main.keysheld[Keyboard.LEFT]) dx -= vel_cam;
-			if (Main.keysheld[Keyboard.RIGHT]) dx += vel_cam;
-			if (Main.keysheld[Keyboard.UP]) dy -= vel_cam;
-			if (Main.keysheld[Keyboard.DOWN]) dy += vel_cam;
-			if (dx != 0 || dy != 0) {
-				backdrop.moveCamera(dx, dy);
-				ocean.moveCamera(dx, dy);
-			}
-			*/
-			
 			camera.update(Main.keysheld[Keyboard.LEFT], Main.keysheld[Keyboard.UP], Main.keysheld[Keyboard.RIGHT], Main.keysheld[Keyboard.DOWN], Keyboard.capsLock?1:2);
 			super.update(); // update actors
 		}

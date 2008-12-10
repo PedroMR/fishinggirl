@@ -35,7 +35,7 @@
 				var building:Sprite = new (houses[id] as Class)();
 				var padding:Number = 80;
 				//building.x = Math.random() * (wid - 2 * padding) + padding - wid;
-				building.x = (i/7+Math.random()/7) * (wid - 2 * padding) + padding - wid;
+				building.x = (i/7-Math.random()/7) * (wid - 2 * padding) + padding - wid;
 				building.y = -building.height + offy[id];
 				addChild(building);
 			}

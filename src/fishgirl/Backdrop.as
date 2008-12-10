@@ -16,7 +16,7 @@
 		public function Backdrop() 
 		{
 			var sky:Sprite = new Sprite();
-			sky.graphics.beginGradientFill(GradientType.LINEAR, [0x73BFFD, 0x0000FF], null, [12, 255], Util.newRotate(-Math.PI / 2));
+			sky.graphics.beginGradientFill(GradientType.LINEAR, [0xC2E3FE, 0x03ABFC], null, [12, 255], Util.newRotate(-Math.PI / 2));
 			sky.graphics.drawRect(0, 0, 2000, 400);
 			sky.graphics.endFill();
 			addChild(sky);
@@ -34,6 +34,14 @@
 				
 				//for (var j:uint = 0; j < 30; j++ ) (a as Mountain).addTree();
 			}
+			
+			for (var j:uint = 0; j < 5; j++) {
+				var cloud:Sprite = new DancGraphics.cloud1();
+				var ac:Actor = new Actor(cloud);
+				far.addActor(ac);
+				ac.y = 0; ac.x = Math.random() * 1000 - 300;
+			}
+				
 
 			mid = new ActorContainer();
 			i = 0;
@@ -45,34 +53,9 @@
 			mid.y += 200;
 			addActor(mid);			
 			
-			/**
-			
-			var i:uint = 0;
-			
-			var xx:Number;
-			xx = -250;
-			i = 0;
-			for each(var spr:Sprite in far) {
-				spr.x = xx;
-				spr.y = fary[i++];
-				xx += spr.width;
-				
-				addChild(spr);
-			}
-			xx = -250;
-			i = 0;
-			for each(spr in mid) {
-				spr.x = xx;
-				spr.y = midy[i++];
-				xx += spr.width;				
-				addChild(spr);
-			}
-			/*
-			addChild(new DancGraphics.background());
-			/**/
-			//this.scaleX = this.scaleY = 0.7;
 
-			addActor(new Bird());
+			for (i = 0; i < 5; i++)
+				addActor(new Bird());
 		}
 		
 		public override function update():void {
