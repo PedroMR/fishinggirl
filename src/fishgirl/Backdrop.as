@@ -2,6 +2,8 @@
 {
 	import flash.display.GradientType;
 	import flash.display.Sprite;
+	import flash.filters.ColorMatrixFilter;
+	import flash.geom.Matrix;
 	import flash.ui.Keyboard;
 	
 	/**
@@ -35,11 +37,15 @@
 				//for (var j:uint = 0; j < 30; j++ ) (a as Mountain).addTree();
 			}
 			
-			for (var j:uint = 0; j < 5; j++) {
+			for (var j:uint = 0; j < 150; j++) {
 				var cloud:Sprite = new DancGraphics.cloud1();
 				var ac:Actor = new Actor(cloud);
-				far.addActor(ac);
-				ac.y = 0; ac.x = Math.random() * 1000 - 300;
+				addActor(ac);
+				ac.z = Math.random() * far.z + 4;
+				ac.scaleY = 4 / ac.z;
+				ac.scaleX = ac.scaleY * (0.9 + Math.random() * 0.2);
+				ac.y = Math.random() * 200 - 100; ac.x = Math.random() * 1500 - 300;
+				ac.transform.colorTransform = Util.brightnessTransform(Util.randomAround(1, 0.2));
 			}
 				
 
@@ -54,8 +60,10 @@
 			addActor(mid);			
 			
 
-			for (i = 0; i < 5; i++)
+			for (i = 0; i < 7; i++)
 				addActor(new Bird());
+
+			sortActors();
 		}
 		
 		public override function update():void {

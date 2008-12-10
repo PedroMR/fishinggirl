@@ -33,6 +33,22 @@
 				a.update();
 			}
 		}		
+		
+		public function sortActors() : void {
+			var changed:Boolean = false;
+			do {				
+				changed = false;
+				for ( var i:uint = 0; i < actors.length-1; ++i ) {
+					if (actors[i].z < actors[i + 1].z) {
+						swapChildren( actors[i], actors[i + 1] );
+						var a:Actor = actors[i + 1];
+						actors[i + 1] = actors[i];
+						actors[i] = a;
+						changed = true;
+					}
+				}
+			} while (changed);
+		}
 	}
 	
 }

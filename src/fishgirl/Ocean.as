@@ -14,8 +14,8 @@
 		public static const MAX_DEPTH:Number = 1400;
 		
 		public static const depthRanges:Array = [ 
-			[ 0.05, 0.35 ],
-			[ 0.15, 0.65 ],
+			[ 0.10, 0.35 ],
+			[ 0.25, 0.65 ],
 			[ 0.45, 0.80 ],
 			[ 0.75, 1.00 ],
 		];

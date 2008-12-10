@@ -17,7 +17,7 @@
 			var cliffColor:uint = 0x454550;
 			cliff = new Sprite();
 			cliff.graphics.beginFill(cliffColor);
-			var wid:Number = 1200, margin:Number=20;
+			var wid:Number = 1500, margin:Number=20;
 			cliff.graphics.drawRect( -wid, 0, wid, Ocean.MAX_DEPTH);
 			cliff.graphics.endFill();
 			cliff.graphics.beginFill(cliffColor);

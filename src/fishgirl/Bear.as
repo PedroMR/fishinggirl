@@ -44,7 +44,7 @@
 			heart = new DancGraphics.heart();
 			heart.y = - sprite.height - 20;
 			heart.x = - heart.width/2;
-			heart.visible = type == YELLOW;//false;
+			heart.visible = false;
 			addChild(heart);
 			
 			state = IDLE;
