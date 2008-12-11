@@ -10,7 +10,7 @@
 	public class Ocean extends ActorContainer
 	{
 		public static const MIN_X:Number = 0;
-		public static const MAX_X:Number = 1200;
+		public static const MAX_X:Number = 1500;
 		public static const MAX_DEPTH:Number = 1400;
 		
 		public static const depthRanges:Array = [ 
@@ -24,7 +24,7 @@
 		{
 			//addChild(new DancGraphics.waterbackground1());
 		
-			for (var i:int = 0; i < 50; i++ )
+			for (var i:int = 0; i < 40; i++ )
 				spawn();
 				
 			//graphics.beginFill(0x000040);
@@ -56,7 +56,7 @@
 			super.update();
 						
 			// update water
-			if (tick % 1024 == 0) 
+			if (tick % 4*4096 == 0) 
 			{
 				addActor(new Bubble(Math.random() * (MAX_X - MIN_X) + MIN_X, Math.random() * 200 + MAX_DEPTH));
 			}

@@ -18,6 +18,7 @@
 		public static const JUMPING:uint = 3;
 		public static const LOVING:uint = 4;
 		public static const MISCAST:uint = 5;
+		public static const PREPARING_CAST:uint = 6;
 		
 		protected var sprite:Sprite;
 		

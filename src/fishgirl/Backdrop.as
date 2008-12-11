@@ -41,11 +41,25 @@
 				var cloud:Sprite = new DancGraphics.cloud1();
 				var ac:Actor = new Actor(cloud);
 				addActor(ac);
-				ac.z = Math.random() * far.z + 4;
-				ac.scaleY = 4 / ac.z;
+				//cloud.alpha = Util.randomAround(0.9, 0.2);
+				ac.z = Math.random() * far.z + 7;
+				ac.scaleY = 8 / ac.z;
 				ac.scaleX = ac.scaleY * (0.9 + Math.random() * 0.2);
 				ac.y = Math.random() * 200 - 100; ac.x = Math.random() * 1500 - 300;
 				ac.transform.colorTransform = Util.brightnessTransform(Util.randomAround(1, 0.2));
+				
+				var cloud2:Sprite = new DancGraphics.cloud1();
+				var ac2:Actor = new Actor(cloud2);
+				addActor(ac2);
+				//cloud2.alpha = cloud.alpha;
+				ac2.x = ac.x;
+				ac2.z = ac.z + 0.12;
+				ac2.scaleY = ac.scaleY * 1.002;
+				ac2.scaleX = ac.scaleX * 1.002;
+				ac2.y = ac.y+2;
+				ac2.transform.colorTransform = Util.brightnessTransform(Util.randomAround(0.6, 0.2));
+				
+				
 			}
 				
 
@@ -60,7 +74,7 @@
 			addActor(mid);			
 			
 
-			for (i = 0; i < 7; i++)
+			for (i = 0; i < 30; i++)
 				addActor(new Bird());
 
 			sortActors();

@@ -23,23 +23,27 @@
 			
 			if (rod != null) {
 				switch(state) {
-					case CASTING:
+					case PREPARING_CAST:
 						rod.rotation -= 2;
 						if (rod.rotation <= -180) {
-							setState(MISCAST);
+							setState(MISCAST);							
 						}
 						break;
 					case MISCAST:
-						rod.rotation += 5;
+						rod.rotation += 7;
 						if (rod.rotation >= 0) {
 							setState(IDLE);
 							rod.rotation = 0;
 						}
 						break;
-				}
-			
-				//if (Main.keysheld[81]) rod.rotation -= 1;			
-				//if (Main.keysheld[65]) rod.rotation += 1;
+					case CASTING:
+						rod.rotation += 15;
+						if (rod.rotation >= 0) {
+							setState(IDLE);
+							rod.rotation = 0;
+						}
+						break;
+				}			
 			}
 		}
 		

@@ -18,8 +18,6 @@
 		
 		public function World() 
 		{
-			camera = new Camera(this);
-			
 			backdrop = new Backdrop();
 			addActor(backdrop);
 			
@@ -43,10 +41,15 @@
 			groupie.x = player.x - 100;
 			groupie.y = player.y;
 			addActor(groupie);
+
+			camera = new Camera(this);
+			
 		}
 		
 		public override function update() : void {
-			camera.update(Main.keysheld[Keyboard.LEFT], Main.keysheld[Keyboard.UP], Main.keysheld[Keyboard.RIGHT], Main.keysheld[Keyboard.DOWN], Keyboard.capsLock?1:2);
+			if (Main.keysheld[65]) camera.setTarget(Ocean.MIN_X, 0);
+			
+			camera.updateKeys(Main.keysheld[Keyboard.LEFT], Main.keysheld[Keyboard.UP], Main.keysheld[Keyboard.RIGHT], Main.keysheld[Keyboard.DOWN], Keyboard.capsLock?1:2);
 			super.update(); // update actors
 		}
 		

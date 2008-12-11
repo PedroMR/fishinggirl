@@ -26,6 +26,7 @@
 			super.update();
 			
 			//vx = Math.sin(tick / 10) * 1;
+			if (y <= 100) alpha = y / 100;
 			if (y <= 0) container.delActor(this);
 		}
 	}

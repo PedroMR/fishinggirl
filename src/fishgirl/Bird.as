@@ -28,6 +28,11 @@
 			}
 			y = Math.random() * 200 + 50;
 			tick = Math.random() * 2000;
+			
+			z = Math.random() * 8+0.8;
+			scaleX = ((vx<0)?-1:1) / z;
+			scaleY = 1 / z;
+			container
 		}
 		
 		override public function update() : void
@@ -36,7 +41,7 @@
 			
 			vy = Math.sin(tick / 15);
 			var amp:Number = 0.06;
-			scaleY = Math.sin(tick / 5)*amp+1-amp/2;
+			scaleY = (Math.sin(tick / 5)*amp+1-amp/2)/z;
 			if (vx > 0 && x > 1000) randomizePosition();
 			else if (vx < 0 && x < -100) randomizePosition();
 		}
