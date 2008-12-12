@@ -16,6 +16,7 @@
 			rod.x = 15;
 			rod.y = -sprite.height /2;
 			addChild(rod);
+			swapChildren(rod, sprite);
 		}
 		
 		public override function update() : void {
@@ -43,8 +44,10 @@
 							rod.rotation = 0;
 						}
 						break;
-				}			
+				}
 			}
+			
+			rod.update();
 		}
 		
 	}

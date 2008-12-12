@@ -49,7 +49,7 @@
 		
 		public function update():void {
 			var inc:Number = 1;
-			var max:Number = 10;
+			var max:Number = 12;
 			
 			var dx:Number = targetX - x;
 			var dy:Number = targetY - y;
