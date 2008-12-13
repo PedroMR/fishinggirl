@@ -11,7 +11,7 @@
 	public class FishingRod extends Actor
 	{
 		internal var sprite:Sprite, point:Sprite;
-		internal var line:FishingLine;
+		internal var line:FishingLineVerlet;
 		
 		public function FishingRod() 
 		{
@@ -27,7 +27,7 @@
 			point.y = sprite.height / 2 + 3;
 			sprite.addChild(point);
 			
-			line = new FishingLine(point.x, point.y);
+			line = new FishingLineVerlet(point.x, point.y);
 			addChild(line);
 			
 			point.graphics.beginFill(0xFF0000, 0.5);
@@ -54,6 +54,9 @@
 			line.update();
 		}
 		
+		public function release():void {
+			line.releaseSegment();
+		}
 	}
 	
 }

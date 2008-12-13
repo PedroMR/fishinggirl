@@ -47,7 +47,7 @@
 		}
 		
 		public override function update() : void {
-			if (Main.keysheld[65]) camera.setTarget(Ocean.MIN_X, 0);
+			//if (Main.keysheld[65]) camera.setTarget(Ocean.MIN_X, 0);
 			
 			camera.updateKeys(Main.keysheld[Keyboard.LEFT], Main.keysheld[Keyboard.UP], Main.keysheld[Keyboard.RIGHT], Main.keysheld[Keyboard.DOWN], Keyboard.capsLock?1:2);
 			super.update(); // update actors

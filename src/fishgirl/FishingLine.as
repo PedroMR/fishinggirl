@@ -15,7 +15,7 @@
 		internal var lure:Particle, lineJoints:Array;
 		
 		public function FishingLine(x:Number, y:Number) 
-		{
+		{			
 			var panchor:Particle = new Particle(new Point2D(x, y));
 			anchor = panchor.state.pos;
 			var l:Number = 8;

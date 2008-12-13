@@ -39,6 +39,7 @@
 						break;
 					case CASTING:
 						rod.rotation += 15;
+						rod.release();
 						if (rod.rotation >= 0) {
 							setState(IDLE);
 							rod.rotation = 0;

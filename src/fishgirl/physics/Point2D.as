@@ -70,6 +70,14 @@
 			dst.y = y + p2.y;
 			return dst;
 		}
+		
+		public function dot(p2:Point2D) : Number {
+			return x * p2.x + y * p2.y;
+		}
+		
+		public function toString():String {
+			return "(Point2D: "+x+","+y+")"
+		}
 	}
 	
 }
