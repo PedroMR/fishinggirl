@@ -23,9 +23,10 @@
 		
 		public var world:World;
 		
-		public var game:GameState;
+		public static var game:GameState;
 		
 		public static var keysheld:Array = [];
+		public static var buttonIsDown:Boolean = false;
 		
 		internal var fps:TextField, nframes:uint=0;
 		
@@ -58,35 +59,43 @@
 		
 		public function buttonPressed() : void {
 			//trace("bp " + state.state);
+			buttonIsDown = true;
+			
 			switch (game.state) {
 				case GameState.READY_TO_CAST:
 					if (world.player.state == Bear.IDLE) {
 						world.player.setState(Bear.PREPARING_CAST);
 						setState(GameState.CASTING);
 					}
-					break;				
+					break;
 			}
 		}
 		
 		public function buttonReleased() : void {
+			buttonIsDown = false;
+			
 			switch (game.state) {
 				case GameState.CASTING:
 					world.player.setState(Bear.CASTING);
-					setState(GameState.READY_TO_CAST);
+					setState(GameState.FISHING);
 					break;				
 			}
 		}
 		
 		public function setState(state:uint) : void {
 			trace("gamestate: " + state);
-			this.game.state = state;
-			
+			game.ticksInState = 0;
+			game.state = state;
+				
 			switch (game.state) {
 				case GameState.READY_TO_CAST:
-					world.camera.setTargetCentreOn(world.town, 0, 0);
+					//world.camera.setTargetCentreOn(world.town, 0, 0);
 					break;
 				case GameState.CASTING:
-					world.camera.setTargetCentre(world.groupie.x, world.town.y);
+					//world.camera.setTargetCentre(world.groupie.x, world.town.y);
+					break;
+				case GameState.FISHING:
+					world.camera.followTarget(world.player.rod.lure);
 					break;
 			}
 		}
@@ -132,11 +141,22 @@
 		private function updateFrame(e:Event = null):void
 		{
 			nframes++;
+			game.ticksInState++;
 			world.update();
-			
 			
 			for each (var a:Actor in actors) {
 				a.update();
+			}
+			
+			switch(game.state) {
+				case GameState.FISHING:
+					if(buttonIsDown)
+						world.player.rod.line.pullLine();
+					if (game.ticksInState > 100 && world.player.rod.line.lureY < 0) {
+						// out of the water
+						setState(GameState.READY_TO_CAST);
+					}
+					break;
 			}
 		}
 		

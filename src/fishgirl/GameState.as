@@ -15,6 +15,7 @@
 		
 		public var state:uint;
 		public var points:uint;
+		public var ticksInState:uint;
 		
 		public function GameState() 
 		{

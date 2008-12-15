@@ -1,5 +1,6 @@
 ﻿package fishgirl 
 {
+	import flash.geom.Point;
 	import flash.text.TextField;
 	
 	/**
@@ -18,13 +19,16 @@
 		public static const X_MIN:Number = -600;
 		public static const X_MAX:Number = Ocean.MAX_X-800;
 		public static const Y_MIN:Number = -100;
-		public static const Y_MAX:Number = Ocean.MAX_DEPTH-100;
+		public static const Y_MAX:Number = Ocean.MAX_DEPTH - 100;
+		
+		protected var following:Actor, followingOffsetX:Number, followingOffsetY:Number;
 		
 		private var dbg:TextField;
 		
 		public function Camera(world:World) 
 		{
-			x = y = vx = vy = 0;
+			following = null;
+			x = y = vx = vy = followingOffsetX = followingOffsetY = 0;
 			this.world = world;
 			has_target = false;
 			dbg = new TextField();
@@ -39,30 +43,47 @@
 		}
 		
 		public function setTargetCentre(cx:Number, cy:Number):void {
-			trace("centre " + [cx, cy]);
 			setTarget(cx - world.stage.stageWidth/2 + x, cy - world.stage.stageHeight/2 + y);
 		}
 		
 		public function setTargetCentreOn(act:Actor, ox:Number, oy:Number) : void {
-			setTargetCentre(act.x + ox, act.y + oy);
+			var p:Point = new Point(act.x + ox, act.y + oy);
+			var p2:Point = act.parent.localToGlobal(p);
+			setTargetCentre(p2.x, p2.y);
+		}
+		
+		public function followTarget(act:Actor, ox:Number = 0, oy:Number = 0) : void {
+			following = act;
+			followingOffsetX = ox;
+			followingOffsetY = oy;
+		}
+		
+		public function stopFollowing() : void {
+			following = null;
 		}
 		
 		public function update():void {
-			var inc:Number = 1;
-			var max:Number = 12;
+			if (following) {
+				trace("following "+[following, followingOffsetX, followingOffsetY]);
+				setTargetCentreOn(following, followingOffsetX, followingOffsetY);
+			}
+			
+			var inc:Number = 4;
+			var max:Number = 40;
 			
 			var dx:Number = targetX - x;
 			var dy:Number = targetY - y;
 			var right:Boolean = dx > 0;
 
-			var px:Number = x + Math.abs(vx)*vx/2; // only for inc == 1
-			var py:Number = y + Math.abs(vy)*vy/2; // only for inc == 1
+			var px:Number = x + Math.abs(vx)*vx/(2*inc); // only for inc == 1
+			var py:Number = y + Math.abs(vy)*vy/(2*inc); // only for inc == 1
 			
-			dbg.text = "x " + x + " px " + px + " tx " + targetX + " vx "+vx;
+			dbg.text = "x " + x + " px " + px + " tx " + targetX + " vx "+vx+" f "+following;
 			
-			if (Math.abs(dx) < 2*inc) {
+			if (Math.abs(dx) < inc) {
 				vx = 0;
 				x = targetX;
+				if (y == targetY) has_target = false;				
 			} else if (right) {
 				if (px < targetX - 2*vx) vx += inc;
 				else if (px >= targetX - 2*vx) { vx -=  inc; if (vx < 0) vx = 0; }
@@ -71,7 +92,7 @@
 				else if (px <= targetX + 2*vx) { vx +=  inc; if (vx > 0) vx = 0; }
 			}
 				
-			if (Math.abs(dy) < 2*inc) {
+			if (Math.abs(dy) < inc) {
 				vy = 0;
 				y = targetY;
 				if (x == targetX) has_target = false;				

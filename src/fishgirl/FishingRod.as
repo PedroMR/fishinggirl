@@ -12,6 +12,7 @@
 	{
 		internal var sprite:Sprite, point:Sprite;
 		internal var line:FishingLineVerlet;
+		public var lure:Lure;
 		
 		public function FishingRod() 
 		{
@@ -36,6 +37,9 @@
 			
 			line.setLength(50);
 			addChild(sprite);
+			
+			lure = new Lure(Fish.SMALL);
+			addChild(lure);
 		}
 		
 		public override function set rotation(val:Number) : void {
@@ -47,11 +51,12 @@
 		}
 		
 		public override function update():void {
-			//line.setAnchor(sprite.x + sprite.width, sprite.y - sprite.height);
+			//line.setAnchor(sprite.x + sprite.width, sprite.y - sprite.height);			
 			var p:Point = new Point(point.x, point.y);
 			p = this.globalToLocal(sprite.localToGlobal(p));
 			line.setAnchor(p.x, p.y);
 			line.update();
+			lure.x = line.lureX; lure.y = line.lureY;
 		}
 		
 		public function release():void {

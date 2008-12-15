@@ -12,7 +12,7 @@
 		public var lureX:Number, lureY:Number, length:Number;
 		public var anchor:Point2D;
 				
-		internal var lure:Particle, lineJoints:Array;
+		private var lure:Particle, lineJoints:Array;
 		
 		public function FishingLine(x:Number, y:Number) 
 		{			

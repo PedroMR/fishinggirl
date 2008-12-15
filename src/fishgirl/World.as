@@ -1,5 +1,6 @@
 ﻿package fishgirl 
 {
+	import flash.geom.Point;
 	import flash.ui.Keyboard;
 	
 	/**
@@ -18,6 +19,8 @@
 		
 		public function World() 
 		{
+			Fish.world = this;
+			
 			backdrop = new Backdrop();
 			addActor(backdrop);
 			
@@ -44,6 +47,16 @@
 
 			camera = new Camera(this);
 			
+		}
+
+		public function findLureIn(x1:Number, y1:Number, x2:Number, y2:Number) : Lure {
+			var pt:Point = new Point(player.rod.lure.x, player.rod.lure.y);
+			pt = player.rod.localToGlobal(pt);
+			pt = ocean.globalToLocal(pt);
+			if (pt.x > x1 && pt.x < x2 && pt.y > y1 && pt.y < y2)
+				return player.rod.lure;
+			else
+				return null;
 		}
 		
 		public override function update() : void {

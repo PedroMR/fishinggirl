@@ -12,11 +12,19 @@
 	 */
 	public class Fish extends Actor
 	{
+		internal static var world:World;
+		
 		internal var sprite:Sprite;
 		
 		internal var target:Point;
 		
+		private var lure:Lure;
+		
 		public var type:uint, size:uint;
+		
+		public static const IDLE:uint = 0;
+		public static const WATCHING:uint = 1;
+		internal var state:uint;
 		
 		internal static const VEL_FLIP_CHANGE:Number = -0.15;
 		internal static const DSCALE_FLIP_CHANGE:Number = 0.20;
@@ -39,14 +47,16 @@
 		{
 			tick = Math.random() * 1024;
 			
+			setState(IDLE);
 			
 			type = Math.random() * 13;
 			size = type / 4;
 						
 			sprite = new sprites[type]();
-			
-			sprite.x = -sprite.width / 2;
-			sprite.y = -sprite.height / 2;
+			//sprite.x = -sprite.width / 2;
+			//if (size == MEDIUM) sprite.x = -sprite.width;
+			//else if (size == LARGE) sprite.x = -sprite.width / 2;
+			sprite.y = 0//-sprite.height / 2;
 			addChild(sprite);
 			
 			setVelocity(0, 0);
@@ -56,9 +66,58 @@
 			
 		}
 		
+		public function setState(s:uint) : void {
+			state = s;
+		}
+		
 		public override function update() : void 
 		{
+			switch(state) {
+			case IDLE:
+				checkLure();
+				updateIdle();
+				break;
+			case WATCHING:
+				updateWatch();
+				break;
+			}
+				
+		}
+		
+		public function updateWatch() : void {
 			
+		}
+		
+		public function checkLure() : void {
+			var dx1:Number = 5;
+			var dx2:Number = 100;
+			var dy1:Number = -30;
+			var dy2:Number = 30;
+			
+			var x1:Number, x2:Number, y1:Number, y2:Number;
+			
+			if (sprite.scaleX < 0) {				
+				x1 = x + dx1; x2 = x + dx2;
+			} else {
+				x1 = x - dx2; x2 = x - dx1;
+			}
+			y1 = y + dy1; y2 = y + dy2;
+			
+			var g:Graphics = graphics;
+			g.clear();
+			g.lineStyle(0, 0xFFFFFF);
+			g.drawRect(x1 - x, y1 - y, x2 - x1, y2 - y1);
+			g.drawCircle(0, 0, 3);
+			
+			var lure:Lure = world.findLureIn(x1, y1, x2, y2);
+			if (lure) {
+				setState(WATCHING);
+				this.lure = lure;
+			}
+		}
+		
+		public function updateIdle() : void 
+		{
 			var dx:Number = target.x - x;
 			var dy:Number = target.y - y;
 			

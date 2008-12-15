@@ -7,7 +7,7 @@
 	 */
 	public class FishingBear extends Bear
 	{
-		protected var rod:FishingRod;		
+		public var rod:FishingRod;		
 		
 		public function FishingBear(type:uint) 
 		{

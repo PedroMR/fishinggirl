@@ -10,7 +10,8 @@
 	public class FishingLineVerlet extends FishingLine
 	{
 		protected var rope:Rope;
-		protected var segments:uint = 30, freed:uint = 1;	
+		protected var segments:uint = 30, freed:uint = 1;
+		public var lure:Point2D;
 		
 		public function FishingLineVerlet(x:Number, y:Number) 
 		{
@@ -19,11 +20,16 @@
 			rope = new Rope(segments, 20, x, y);
 			releaseSegments(3);
 			rope.setMass(0, Rope.MASS_FIXED);
-			rope.setMass(segments-1, 50);
+			rope.setMass(segments - 1, 50);
+			lure = rope.pos[segments - 1];
 		}
 		
 		public function releaseSegment() : void {
 			releaseSegments(freed + 1);
+		}
+		
+		public function pullLine() : void {
+			releaseSegments(freed - 1);
 		}
 		
 		public function releaseSegments(n:int = -1) : void {
@@ -52,6 +58,8 @@
 			for (var i:uint = segments-freed; i < segments; i++ ) {
 				graphics.lineTo(rope.pos[i].x, rope.pos[i].y);
 			}
+			lureX = lure.x;
+			lureY = lure.y;
 		}
 	}
 	
