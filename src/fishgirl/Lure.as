@@ -13,6 +13,8 @@
 		 */
 		public var size:uint;
 		
+		public var oceanX:Number, oceanY:Number;
+		
 		private static var gfx:Array = [ DancGraphics.lureSmall, DancGraphics.lureMedium, DancGraphics.lureLarge, DancGraphics.lureBomb ];
 		
 		public function Lure(size:uint) 
@@ -26,6 +28,11 @@
 			addChild(spr);
 		}
 		
+		public override function update():void {
+			super.update();
+			
+			
+		}
 	}
 	
 }

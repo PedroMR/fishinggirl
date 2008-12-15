@@ -19,11 +19,15 @@
 		internal var target:Point;
 		
 		private var lure:Lure;
+		private var ticksInState:uint;
+		
+		protected var chaseSpeed:Number;
 		
 		public var type:uint, size:uint;
 		
 		public static const IDLE:uint = 0;
 		public static const WATCHING:uint = 1;
+		public static const CHASING:uint = 2;
 		internal var state:uint;
 		
 		internal static const VEL_FLIP_CHANGE:Number = -0.15;
@@ -67,11 +71,23 @@
 		}
 		
 		public function setState(s:uint) : void {
+			if (state == s)
+				return;
 			state = s;
+			ticksInState = 0;
+			switch(state) {
+				case IDLE:
+					rotation = 0;
+					break;
+				case CHASING:
+					chaseSpeed = 0;
+					break;
+			}
 		}
 		
 		public override function update() : void 
 		{
+			ticksInState++;
 			switch(state) {
 			case IDLE:
 				checkLure();
@@ -79,20 +95,60 @@
 				break;
 			case WATCHING:
 				updateWatch();
+				checkLure();
+				break;
+			case CHASING:
+				updateChase();
+				checkLure();
 				break;
 			}
 				
 		}
 		
+		public function updateChase() : void {
+			chaseSpeed += 0.1;
+			var dx:Number = lure.oceanX - x;
+			var dy:Number = lure.oceanY - y;
+			var alpha:Number = Math.atan2(dy, dx);	
+			if (sprite.scaleX > 0) alpha = Math.PI+alpha;
+			rotation = 180 * alpha/ Math.PI;
+			vx = chaseSpeed * Math.cos(alpha);
+			vy = chaseSpeed * Math.sin(alpha);
+			/*
+			graphics.clear();
+			graphics.lineStyle(0, 0xFF0000);
+			graphics.moveTo(0, 0);
+			graphics.lineTo(vx, vy);
+			*/
+			super.update();
+		}
+		
 		public function updateWatch() : void {
+			vx = 0;
+			updateBobbing();			
+			super.update();
+			var dx:Number = lure.oceanX - x;
+			var dy:Number = lure.oceanY - y;
 			
+			var alpha:Number = Math.atan2(dy, dx);
+			if (sprite.scaleX > 0) alpha = Math.PI+alpha;
+			rotation = 180 * alpha/ Math.PI;
+			/*
+			graphics.clear();
+			graphics.lineStyle(0, 0xFF0000);
+			graphics.moveTo(0, 0);
+			graphics.lineTo(dx, dy);
+			*/
+			
+			if (ticksInState > 10) 
+				setState(CHASING);
 		}
 		
 		public function checkLure() : void {
-			var dx1:Number = 5;
-			var dx2:Number = 100;
-			var dy1:Number = -30;
-			var dy2:Number = 30;
+			var dx1:Number = state==IDLE ? 5 : -5;
+			var dx2:Number = state==IDLE ? 100 : 200;
+			var dy1:Number = state==IDLE ? -30 : -100;
+			var dy2:Number = state==IDLE ? 30 : 100;
 			
 			var x1:Number, x2:Number, y1:Number, y2:Number;
 			
@@ -102,26 +158,34 @@
 				x1 = x - dx2; x2 = x - dx1;
 			}
 			y1 = y + dy1; y2 = y + dy2;
-			
+			/*
 			var g:Graphics = graphics;
 			g.clear();
 			g.lineStyle(0, 0xFFFFFF);
 			g.drawRect(x1 - x, y1 - y, x2 - x1, y2 - y1);
 			g.drawCircle(0, 0, 3);
-			
+			*/
 			var lure:Lure = world.findLureIn(x1, y1, x2, y2);
 			if (lure) {
-				setState(WATCHING);
-				this.lure = lure;
+				if (state == IDLE) {
+					setState(WATCHING);				
+					this.lure = lure;
+				}
+			} else {
+				setState(IDLE);
+				this.lure = null;
 			}
 		}
 		
+		public function updateBobbing() : void {
+			vy = Math.sin(tick / 5) * 0.5;
+		}
 		public function updateIdle() : void 
 		{
 			var dx:Number = target.x - x;
 			var dy:Number = target.y - y;
 			
-			vy = Math.sin(tick / 5) * 0.5;
+			updateBobbing();
 			
 			if (dx > 0) {				
 				if (vx < VELOCITY_MAX) {

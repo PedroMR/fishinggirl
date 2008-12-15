@@ -35,7 +35,7 @@
 			town.x = ocean.x;
 			addActor(town);
 			
-			player = new FishingBear(Bear.PINK);
+			player = new FishingBear(Bear.PINK, ocean);
 			player.x = ocean.x;
 			player.y = town.y;
 			addActor(player);

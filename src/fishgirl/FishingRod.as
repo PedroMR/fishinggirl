@@ -12,10 +12,13 @@
 	{
 		internal var sprite:Sprite, point:Sprite;
 		internal var line:FishingLineVerlet;
+		protected var ocean:Ocean;
 		public var lure:Lure;
 		
-		public function FishingRod() 
+		public function FishingRod(ocean:Ocean) 
 		{
+			this.ocean = ocean;
+			
 			sprite = new DancGraphics.fishingRod();
 			graphics.beginFill(0xFF0000);
 			graphics.drawCircle(0, 0, 3);
@@ -57,6 +60,8 @@
 			line.setAnchor(p.x, p.y);
 			line.update();
 			lure.x = line.lureX; lure.y = line.lureY;
+			var pt:Point = ocean.globalToLocal(localToGlobal(new Point(lure.x, lure.y)));
+			lure.oceanX = pt.x; lure.oceanY = pt.y;
 		}
 		
 		public function release():void {

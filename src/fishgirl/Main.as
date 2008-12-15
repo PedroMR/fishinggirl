@@ -89,13 +89,13 @@
 				
 			switch (game.state) {
 				case GameState.READY_TO_CAST:
-					//world.camera.setTargetCentreOn(world.town, 0, 0);
+					world.camera.setTargetCentreOn(world.town, 0, 0);
 					break;
 				case GameState.CASTING:
-					//world.camera.setTargetCentre(world.groupie.x, world.town.y);
+					world.camera.setTargetCentre(world.groupie.x, world.town.y);
 					break;
 				case GameState.FISHING:
-					world.camera.followTarget(world.player.rod.lure);
+					//world.camera.followTarget(world.player.rod.lure);
 					break;
 			}
 		}

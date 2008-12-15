@@ -9,10 +9,10 @@
 	{
 		public var rod:FishingRod;		
 		
-		public function FishingBear(type:uint) 
+		public function FishingBear(type:uint, ocean:Ocean) 
 		{
 			super(type);
-			rod = new FishingRod();
+			rod = new FishingRod(ocean);
 			rod.x = 15;
 			rod.y = -sprite.height /2;
 			addChild(rod);
