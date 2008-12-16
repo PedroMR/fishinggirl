@@ -50,10 +50,16 @@
 		}
 
 		public function findLureIn(x1:Number, y1:Number, x2:Number, y2:Number) : Lure {
-			var pt:Point = new Point(player.rod.lure.x, player.rod.lure.y);
+			var lure:Lure = player.rod.lure;
+			if (lure.size == Lure.NONE) 
+				return null;
+			/*
+			var pt:Point = new Point(lure.x, lure.y);
 			pt = player.rod.localToGlobal(pt);
 			pt = ocean.globalToLocal(pt);
 			if (pt.x > x1 && pt.x < x2 && pt.y > y1 && pt.y < y2)
+			*/
+			if (lure.oceanX > x1 && lure.oceanX < x2 && lure.oceanY > y1 && lure.oceanY < y2)
 				return player.rod.lure;
 			else
 				return null;

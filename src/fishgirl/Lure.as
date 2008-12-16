@@ -8,30 +8,51 @@
 	 */
 	public class Lure extends Actor
 	{
+		public static const NONE:uint = 255;
 		/**
 		 * Size of the lure. Use the Fish.SMALL - Fish.LARGE variables.
 		 */
 		public var size:uint;
+		public var fish:Fish;
 		
 		public var oceanX:Number, oceanY:Number;
+		private var spr:Sprite;
 		
 		private static var gfx:Array = [ DancGraphics.lureSmall, DancGraphics.lureMedium, DancGraphics.lureLarge, DancGraphics.lureBomb ];
 		
 		public function Lure(size:uint) 
 		{
-			this.size = size;
-			var spr:Sprite = new (gfx[size] as Class)();
-			if (size == Fish.SMALL) {
-				spr.x -= spr.width / 2;
-				spr.y -= spr.height / 2;
+			setSize(size);
+		}
+		
+		public function setSize(size:uint):void {
+			if (spr != null) {
+				removeChild(spr);
+				spr = null;
 			}
-			addChild(spr);
+			this.size = size;
+			if (size != NONE) {
+				fish = null;
+				spr = new (gfx[size] as Class)();
+				if (size == Fish.SMALL) {
+					spr.x -= spr.width / 2;
+					spr.y -= spr.height / 2;
+				}
+				addChild(spr);
+			}
 		}
 		
 		public override function update():void {
-			super.update();
-			
-			
+			super.update();			
+		}
+		
+		public function caught(fish:Fish) : void {
+			setSize(NONE);
+			this.fish = fish;
+		}
+		
+		public function eaten() : void {
+			setSize(NONE);
 		}
 	}
 	

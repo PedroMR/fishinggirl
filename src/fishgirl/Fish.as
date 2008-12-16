@@ -28,6 +28,7 @@
 		public static const IDLE:uint = 0;
 		public static const WATCHING:uint = 1;
 		public static const CHASING:uint = 2;
+		public static const CAUGHT:uint = 3;
 		internal var state:uint;
 		
 		internal static const VEL_FLIP_CHANGE:Number = -0.15;
@@ -82,6 +83,11 @@
 				case CHASING:
 					chaseSpeed = 0;
 					break;
+				case CAUGHT:
+					rotation = 90;
+					vx = vy = 0;
+					sprite.scaleX = Math.abs(sprite.scaleX);
+					break;
 			}
 		}
 		
@@ -99,19 +105,35 @@
 				break;
 			case CHASING:
 				updateChase();
-				checkLure();
 				break;
-			}
-				
+			case CAUGHT:
+				super.update();
+				x = lure.oceanX;
+				y = lure.oceanY;
+				break;
+			}				
 		}
 		
 		public function updateChase() : void {
 			chaseSpeed += 0.1;
 			var dx:Number = lure.oceanX - x;
 			var dy:Number = lure.oceanY - y;
+			var epsilon:Number = 0.5;
+			if (Math.abs(dx) < epsilon && Math.abs(dy) < epsilon) {
+				if (lure.size == size) {
+					lure.caught(this);
+					setState(CAUGHT);
+					return;
+				} else if (lure.size < size) {
+					lure.eaten();
+					setState(IDLE);
+				}
+			}
+			
 			var alpha:Number = Math.atan2(dy, dx);	
 			if (sprite.scaleX > 0) alpha = Math.PI+alpha;
 			rotation = 180 * alpha/ Math.PI;
+			if (sprite.scaleX > 0) alpha -= Math.PI;
 			vx = chaseSpeed * Math.cos(alpha);
 			vy = chaseSpeed * Math.sin(alpha);
 			/*
@@ -121,6 +143,7 @@
 			graphics.lineTo(vx, vy);
 			*/
 			super.update();
+			checkLure();			
 		}
 		
 		public function updateWatch() : void {

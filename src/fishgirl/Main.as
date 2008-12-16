@@ -22,6 +22,7 @@
 		internal var actors:Array;
 		
 		public var world:World;
+		public var score:ScoreDisplay;
 		
 		public static var game:GameState;
 		
@@ -89,6 +90,7 @@
 				
 			switch (game.state) {
 				case GameState.READY_TO_CAST:
+					world.player.rod.lure.setSize(Fish.SMALL);
 					world.camera.setTargetCentreOn(world.town, 0, 0);
 					break;
 				case GameState.CASTING:
@@ -115,6 +117,10 @@
 			
 			world = new World();
 			addChild(world);
+			
+			score = new ScoreDisplay();
+			addChild(score);
+			score.x = stage.stageWidth;
 			
 			stage.addEventListener(KeyboardEvent.KEY_DOWN, handleKeyDown);
 			stage.addEventListener(KeyboardEvent.KEY_UP, handleKeyUp);
@@ -143,6 +149,7 @@
 			nframes++;
 			game.ticksInState++;
 			world.update();
+			score.update();
 			
 			for each (var a:Actor in actors) {
 				a.update();
@@ -155,6 +162,8 @@
 					if (game.ticksInState > 100 && world.player.rod.lure.oceanY < 0) {
 						// out of the water
 						world.camera.stopFollowing();
+						game.points += 100;
+						//world.player.rod.lure.fish.disappear();
 						setState(GameState.READY_TO_CAST);
 					}
 					break;
