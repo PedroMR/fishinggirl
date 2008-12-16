@@ -53,22 +53,23 @@
 		}
 		
 		public function followTarget(act:Actor, ox:Number = 0, oy:Number = 0) : void {
+			trace("set follow " + act);
 			following = act;
 			followingOffsetX = ox;
 			followingOffsetY = oy;
 		}
 		
 		public function stopFollowing() : void {
+			trace("stop fol");
 			following = null;
 		}
 		
 		public function update():void {
 			if (following) {
-				trace("following "+[following, followingOffsetX, followingOffsetY]);
 				setTargetCentreOn(following, followingOffsetX, followingOffsetY);
 			}
 			
-			var inc:Number = 4;
+			var inc:Number = 0.3;
 			var max:Number = 40;
 			
 			var dx:Number = targetX - x;
@@ -78,17 +79,19 @@
 			var px:Number = x + Math.abs(vx)*vx/(2*inc); // only for inc == 1
 			var py:Number = y + Math.abs(vy)*vy/(2*inc); // only for inc == 1
 			
-			dbg.text = "x " + x + " px " + px + " tx " + targetX + " vx "+vx+" f "+following;
+			//dbg.text = "x " + x + " px " + px + " tx " + targetX + " vx "+vx+" f "+following;
 			
 			if (Math.abs(dx) < inc) {
 				vx = 0;
 				x = targetX;
 				if (y == targetY) has_target = false;				
 			} else if (right) {
-				if (px < targetX - 2*vx) vx += inc;
+				if (px < targetX - 2 * vx) {
+					vx += ((px < targetX - 8*vx)? 3 : 1 ) * inc;
+				}
 				else if (px >= targetX - 2*vx) { vx -=  inc; if (vx < 0) vx = 0; }
 			} else {
-				if (px > targetX + 2*vx) vx += -inc;
+				if (px > targetX + 2*vx) vx -= ((px > targetX + 8*vx)? 3 : 1 ) * inc;
 				else if (px <= targetX + 2*vx) { vx +=  inc; if (vx > 0) vx = 0; }
 			}
 				
@@ -97,10 +100,10 @@
 				y = targetY;
 				if (x == targetX) has_target = false;				
 			} else if (dy>0) {
-				if (py < targetY - 2*vy) vy += inc;
+				if (py < targetY - 2*vy) vy += ((py < targetY - 8*vy)? 3 : 1 ) * inc;
 				else { vy -=  inc; if (vy < 0) vy = 0; }
 			} else {
-				if (py > targetY + 2*vy) vy += -inc;
+				if (py > targetY + 2*vy) vy -= ((py > targetY + 8*vy)? 3 : 1 ) * inc;
 				else { vy +=  inc; if (vy > 0) vy = 0; }
 			}
 				
@@ -114,7 +117,7 @@
 		public function updateKeys(left:Boolean, up:Boolean, right:Boolean, down:Boolean, turbo:Number) : void {
 			dbg.text = "t? "+has_target;
 			
-			if (has_target) {
+			if (has_target || following) {
 				update();
 			} else {
 				var inc:Number = 1*turbo;

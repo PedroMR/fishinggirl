@@ -95,7 +95,7 @@
 					world.camera.setTargetCentre(world.groupie.x, world.town.y);
 					break;
 				case GameState.FISHING:
-					//world.camera.followTarget(world.player.rod.lure);
+					world.camera.followTarget(world.player.rod.lure);
 					break;
 			}
 		}
@@ -152,8 +152,9 @@
 				case GameState.FISHING:
 					if(buttonIsDown)
 						world.player.rod.line.pullLine();
-					if (game.ticksInState > 100 && world.player.rod.line.lureY < 0) {
+					if (game.ticksInState > 100 && world.player.rod.lure.oceanY < 0) {
 						// out of the water
+						world.camera.stopFollowing();
 						setState(GameState.READY_TO_CAST);
 					}
 					break;
