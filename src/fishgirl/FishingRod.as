@@ -62,10 +62,15 @@
 			lure.x = line.lureX; lure.y = line.lureY;
 			var pt:Point = ocean.globalToLocal(localToGlobal(new Point(lure.x, lure.y)));
 			lure.oceanX = pt.x; lure.oceanY = pt.y;
+			if (lure.oceanY > 10) lure.thrown = true;
 		}
 		
 		public function release():void {
 			line.releaseSegment();
+		}
+		
+		public function isReeledIn():Boolean {
+			return line.freed == 1;
 		}
 	}
 	

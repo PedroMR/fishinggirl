@@ -26,6 +26,7 @@
 				switch(state) {
 					case PREPARING_CAST:
 						rod.rotation -= 2;
+						rod.lure.thrown = false;
 						if (rod.rotation <= -180) {
 							setState(MISCAST);							
 						}
@@ -40,9 +41,9 @@
 					case CASTING:
 						rod.rotation += 15;
 						rod.release();
-						if (rod.rotation >= 0) {
+						if (rod.rotation >= -15) {
 							setState(IDLE);
-							rod.rotation = 0;
+							rod.rotation = -15;
 						}
 						break;
 				}

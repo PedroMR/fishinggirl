@@ -29,6 +29,7 @@
 		public static const WATCHING:uint = 1;
 		public static const CHASING:uint = 2;
 		public static const CAUGHT:uint = 3;
+		public static const DISAPPEARING:uint = 4;
 		internal var state:uint;
 		
 		internal static const VEL_FLIP_CHANGE:Number = -0.15;
@@ -80,6 +81,9 @@
 				case IDLE:
 					rotation = 0;
 					break;
+				case WATCHING:
+					sprite.scaleX = sprite.scaleX < 0 ? -1 : 1;
+					break;
 				case CHASING:
 					chaseSpeed = 0;
 					break;
@@ -106,6 +110,12 @@
 			case CHASING:
 				updateChase();
 				break;
+			case DISAPPEARING:
+				sprite.alpha -= 0.03;
+				if (sprite.alpha <= 0) {
+					container.delActor(this);
+				}
+				// fall through (still caught)
 			case CAUGHT:
 				super.update();
 				x = lure.oceanX;
@@ -119,7 +129,7 @@
 			var dx:Number = lure.oceanX - x;
 			var dy:Number = lure.oceanY - y;
 			var epsilon:Number = 0.5;
-			if (Math.abs(dx) < epsilon && Math.abs(dy) < epsilon) {
+			if (Math.abs(dx) < chaseSpeed && Math.abs(dy) < chaseSpeed) {
 				if (lure.size == size) {
 					lure.caught(this);
 					setState(CAUGHT);
@@ -252,6 +262,10 @@
 		
 		public function chooseTarget() : void {
 			target = new Point( Math.random() * (Ocean.MAX_X-Ocean.MIN_X+600) + Ocean.MIN_X - 300, y );
+		}
+		
+		public function disappear() : void {
+			setState(DISAPPEARING);
 		}
 		
 	}

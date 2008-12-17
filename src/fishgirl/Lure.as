@@ -17,6 +17,7 @@
 		
 		public var oceanX:Number, oceanY:Number;
 		private var spr:Sprite;
+		public var thrown:Boolean;
 		
 		private static var gfx:Array = [ DancGraphics.lureSmall, DancGraphics.lureMedium, DancGraphics.lureLarge, DancGraphics.lureBomb ];
 		
@@ -26,6 +27,7 @@
 		}
 		
 		public function setSize(size:uint):void {
+			thrown = false;
 			if (spr != null) {
 				removeChild(spr);
 				spr = null;
@@ -43,7 +45,8 @@
 		}
 		
 		public override function update():void {
-			super.update();			
+			super.update();
+			if (oceanY > 0) thrown = true;
 		}
 		
 		public function caught(fish:Fish) : void {
@@ -53,6 +56,10 @@
 		
 		public function eaten() : void {
 			setSize(NONE);
+		}
+		
+		public function isOutOfTheWater() : Boolean {
+			return thrown && oceanY < 10;
 		}
 	}
 	

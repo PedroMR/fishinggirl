@@ -10,7 +10,7 @@
 	public class FishingLineVerlet extends FishingLine
 	{
 		protected var rope:Rope;
-		protected var segments:uint = 30, freed:uint = 1;
+		public var segments:uint = 30, freed:uint = 1;
 		public var lure:Point2D;
 		
 		public function FishingLineVerlet(x:Number, y:Number) 

@@ -12,6 +12,7 @@
 		public static const CASTING:uint = 2;
 		public static const FISHING:uint = 3;
 		public static const SCORING:uint = 4;
+		public static const MISCAST:uint = 5;
 		
 		public var state:uint;
 		public var points:uint;

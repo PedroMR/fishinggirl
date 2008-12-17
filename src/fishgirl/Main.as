@@ -156,14 +156,25 @@
 			}
 			
 			switch(game.state) {
+				case GameState.CASTING:
+					if (world.player.state == Bear.MISCAST)
+						setState(GameState.MISCAST);
+					break;
+				case GameState.MISCAST:
+					if (world.player.state == Bear.IDLE)
+						setState(GameState.READY_TO_CAST);
+					break;
 				case GameState.FISHING:
-					if(buttonIsDown)
+					if(buttonIsDown && (game.ticksInState%4==0))
 						world.player.rod.line.pullLine();
-					if (game.ticksInState > 100 && world.player.rod.lure.oceanY < 0) {
-						// out of the water
+					var lure:Lure = world.player.rod.lure;
+					if (world.player.rod.isReeledIn()) {
 						world.camera.stopFollowing();
-						game.points += 100;
-						//world.player.rod.lure.fish.disappear();
+						var fish:Fish = lure.fish;
+						if (fish) {
+							game.points += 100;
+							fish.disappear();
+						}
 						setState(GameState.READY_TO_CAST);
 					}
 					break;
