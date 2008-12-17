@@ -25,6 +25,8 @@
 		
 		public var type:uint, size:uint;
 		
+		public var targetRotation:Number;
+		
 		public static const IDLE:uint = 0;
 		public static const WATCHING:uint = 1;
 		public static const CHASING:uint = 2;
@@ -36,11 +38,14 @@
 		internal static const DSCALE_FLIP_CHANGE:Number = 0.20;
 		internal static const VELOCITY_INCREASE:Number = 0.1;
 		internal static const VELOCITY_MAX:Number = 5;
+		internal static const CHASE_SPEED_MAX:Number = 14;
 		
 		public static const SMALL:uint = 0;
 		public static const MEDIUM:uint = 1;
 		public static const LARGE:uint = 2;
 		public static const VERY_LARGE:uint = 3;
+		public static const NUM_TYPES_PER_SIZE:uint = 4;
+		public static const NUM_TYPES:uint = NUM_TYPES_PER_SIZE*3+1;
 		
 		internal static const sprites:Array = [
 			DancGraphics.fishSmall1, DancGraphics.fishSmall2, DancGraphics.fishSmall3, DancGraphics.fishSmall4, 
@@ -49,13 +54,14 @@
 			DancGraphics.fishVeryLarge1,
 		];
 		
-		public function Fish() 
+		public function Fish(type:uint) 
 		{
 			tick = Math.random() * 1024;
+			targetRotation = rotation;
 			
 			setState(IDLE);
 			
-			type = Math.random() * 13;
+			this.type = type;
 			size = type / 4;
 						
 			sprite = new sprites[type]();
@@ -79,7 +85,8 @@
 			ticksInState = 0;
 			switch(state) {
 				case IDLE:
-					rotation = 0;
+					targetRotation = 0;
+					sprite.scaleX = sprite.scaleX < 0 ? -1 : 1;
 					break;
 				case WATCHING:
 					sprite.scaleX = sprite.scaleX < 0 ? -1 : 1;
@@ -88,7 +95,7 @@
 					chaseSpeed = 5;
 					break;
 				case CAUGHT:
-					rotation = 90;
+					targetRotation = 90;
 					vx = vy = 0;
 					sprite.scaleX = Math.abs(sprite.scaleX);
 					break;
@@ -98,6 +105,29 @@
 		public override function update() : void 
 		{
 			ticksInState++;
+			/*
+			graphics.clear();
+			graphics.lineStyle(0, 0xFF0000);
+			var alpha:Number = (targetRotation - rotation) * Math.PI / 180;
+			graphics.lineTo(10 * Math.cos(alpha), 10 * Math.sin(alpha));
+			*/
+			if (rotation != targetRotation) {				
+				var rotationDelta:Number = ((targetRotation - rotation)%360 + 360) % 360;
+				if (rotationDelta > 180) rotationDelta = rotationDelta-360;
+				var rotationInc:Number = 10;
+				if (rotationDelta > 0) {
+					if (rotationDelta > rotationInc)
+						rotation += rotationInc;
+					else
+						rotation += rotationDelta;
+				} else if (rotationDelta < 0) {
+					if (rotationDelta < -rotationInc)
+						rotation += -rotationInc;
+					else
+						rotation += rotationDelta;
+				}
+			}
+			
 			switch(state) {
 			case IDLE:
 				checkLure();
@@ -129,7 +159,7 @@
 		}
 		
 		public function updateChase() : void {
-			if (chaseSpeed < 25) chaseSpeed *= 1.3;
+			if (chaseSpeed < CHASE_SPEED_MAX) chaseSpeed *= 1.3;
 			var dx:Number = lure.oceanX - x;
 			var dy:Number = lure.oceanY - y;
 			var epsilon:Number = 0.5;
@@ -141,12 +171,13 @@
 				} else if (lure.size < size) {
 					lure.eaten();
 					setState(IDLE);
+					return;
 				}
 			}
 			
 			var alpha:Number = Math.atan2(dy, dx);	
 			if (sprite.scaleX > 0) alpha = Math.PI+alpha;
-			rotation = 180 * alpha/ Math.PI;
+			targetRotation = 180 * alpha/ Math.PI;
 			if (sprite.scaleX > 0) alpha -= Math.PI;
 			vx = chaseSpeed * Math.cos(alpha);
 			vy = chaseSpeed * Math.sin(alpha);
@@ -169,7 +200,7 @@
 			
 			var alpha:Number = Math.atan2(dy, dx);
 			if (sprite.scaleX > 0) alpha = Math.PI+alpha;
-			rotation = 180 * alpha/ Math.PI;
+			targetRotation = 180 * alpha/ Math.PI;
 			/*
 			graphics.clear();
 			graphics.lineStyle(0, 0xFF0000);
@@ -215,7 +246,7 @@
 		}
 		
 		public function updateBobbing() : void {
-			vy = Math.sin(tick / 4) * 0.5;
+			vy = Math.sin(tick / (2*Math.PI)) * 0.6;
 		}
 		public function updateIdle() : void 
 		{
