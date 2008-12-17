@@ -23,7 +23,7 @@
 		
 		protected var chaseSpeed:Number;
 		
-		public var type:uint, size:uint;
+		public var type:uint, size:uint, score:uint;
 		
 		public var targetRotation:Number;
 		
@@ -63,6 +63,8 @@
 			
 			this.type = type;
 			size = type / 4;
+			
+			score = 80 + (size*size)*100 + type*((size+1)*50);
 						
 			sprite = new sprites[type]();
 			//sprite.x = -sprite.width / 2;
@@ -296,7 +298,11 @@
 		}
 		
 		public function chooseTarget() : void {
-			target = new Point( Math.random() * (Ocean.MAX_X-Ocean.MIN_X+600) + Ocean.MIN_X - 300, y );
+			var r:Number = Math.random();
+			var amp:Number = (Ocean.MAX_X - Ocean.MIN_X) / Fish.NUM_TYPES_PER_SIZE;
+			target = new Point( r * 1.6 * amp - 0.8*amp + Ocean.MIN_X + amp * (type%Fish.NUM_TYPES_PER_SIZE), y );
+			
+			//target = new Point( Math.random() * (Ocean.MAX_X-Ocean.MIN_X+600) + Ocean.MIN_X - 300, y );
 		}
 		
 		public function disappear() : void {

@@ -185,7 +185,7 @@
 						world.camera.stopFollowing();
 						var fish:Fish = lure.fish;
 						if (fish) {
-							game.points += 100;
+							game.points += fish.score;
 							fish.disappear();
 						}
 						setState(GameState.READY_TO_CAST);

@@ -58,8 +58,11 @@
 		public function addFish(f:Fish, depth:Number) : void {
 			addActor(f);
 			var r:Number = Math.random();
-			f.x = (r < 0.5) ? MIN_X-2000*r : MAX_X+2000*(r-0.5);
+			var amp:Number = (MAX_X - MIN_X) / Fish.NUM_TYPES_PER_SIZE;
+			f.x = r * 2 * amp + MIN_X + amp * (f.type%Fish.NUM_TYPES_PER_SIZE);
+			//f.x = (r < 0.5) ? MIN_X-2000*r : MAX_X+2000*(r-0.5);
 			f.y = depth;
+			trace( "type " + f.type + " at " + [f.x, f.y]);
 			f.chooseTarget();
 		}
 		
