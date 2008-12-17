@@ -23,7 +23,7 @@
 		
 		protected var following:Actor, followingOffsetX:Number, followingOffsetY:Number;
 		
-		private var dbg:TextField;
+		public var dbg:TextField;
 		
 		public function Camera(world:World) 
 		{
@@ -115,7 +115,7 @@
 		}
 		
 		public function updateKeys(left:Boolean, up:Boolean, right:Boolean, down:Boolean, turbo:Number) : void {
-			dbg.text = "t? "+has_target;
+			//dbg.text = "t? "+has_target;
 			
 			if (has_target || following) {
 				update();

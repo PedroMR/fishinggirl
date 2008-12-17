@@ -8,6 +8,8 @@
 	 */
 	public class Actor extends Sprite
 	{		
+		public static var nActors:uint = 0;
+		
 		public var container:ActorContainer;
 		protected var tick:uint;
 		protected var vx:Number, vy:Number;
@@ -43,6 +45,7 @@
 		
 		public function update() : void 
 		{
+			nActors++;
 			tick++;
 			
 			x += vx / z;

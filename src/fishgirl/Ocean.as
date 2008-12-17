@@ -56,9 +56,9 @@
 			super.update();
 						
 			// update water
-			if (tick % 4*4096 == 0) 
+			if (tick % 16*4096 == 0) 
 			{
-				addActor(new Bubble(Math.random() * (MAX_X - MIN_X) + MIN_X, Math.random() * 200 + MAX_DEPTH));
+				//addActor(new Bubble(Math.random() * (MAX_X - MIN_X) + MIN_X, Math.random() * 200 + MAX_DEPTH));
 			}
 		}
 	}

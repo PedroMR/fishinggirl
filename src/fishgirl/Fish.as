@@ -85,7 +85,7 @@
 					sprite.scaleX = sprite.scaleX < 0 ? -1 : 1;
 					break;
 				case CHASING:
-					chaseSpeed = 0;
+					chaseSpeed = 5;
 					break;
 				case CAUGHT:
 					rotation = 90;
@@ -115,7 +115,11 @@
 				if (sprite.alpha <= 0) {
 					container.delActor(this);
 				}
-				// fall through (still caught)
+				vy = -8;
+				vx = 0;
+				scaleY = scaleX = scaleY + 0.05;
+				super.update();
+				break;
 			case CAUGHT:
 				super.update();
 				x = lure.oceanX;
@@ -125,7 +129,7 @@
 		}
 		
 		public function updateChase() : void {
-			chaseSpeed += 0.1;
+			if (chaseSpeed < 25) chaseSpeed *= 1.3;
 			var dx:Number = lure.oceanX - x;
 			var dy:Number = lure.oceanY - y;
 			var epsilon:Number = 0.5;
@@ -173,7 +177,7 @@
 			graphics.lineTo(dx, dy);
 			*/
 			
-			if (ticksInState > 10) 
+			if (ticksInState > 30) 
 				setState(CHASING);
 		}
 		
@@ -211,7 +215,7 @@
 		}
 		
 		public function updateBobbing() : void {
-			vy = Math.sin(tick / 5) * 0.5;
+			vy = Math.sin(tick / 4) * 0.5;
 		}
 		public function updateIdle() : void 
 		{

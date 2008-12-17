@@ -11,7 +11,7 @@
 		public function Bird() 
 		{
 			addChild(new DancGraphics.bird());
-			vx = 8;
+			vx = 6;
 			randomizePosition();
 			x += tick * vx;
 		}

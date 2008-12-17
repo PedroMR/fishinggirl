@@ -12,6 +12,8 @@
 	 */
 	public class Backdrop extends ActorContainer
 	{	
+		private static const NUM_BIRDS:uint = 14;
+		
 		internal var far:ActorContainer;
 		internal var mid:ActorContainer;		
 		
@@ -74,7 +76,7 @@
 			addActor(mid);			
 			
 
-			for (i = 0; i < 30; i++)
+			for (i = 0; i < NUM_BIRDS; i++)
 				addActor(new Bird());
 
 			sortActors();

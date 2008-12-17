@@ -1,5 +1,6 @@
 ﻿package fishgirl 
 {
+	import flash.ui.Keyboard;
 	
 	/**
 	 * ...
@@ -39,12 +40,15 @@
 						}
 						break;
 					case CASTING:
-						rod.rotation += 15;
-						rod.release();
-						if (rod.rotation >= -15) {
-							setState(IDLE);
+						if (rod.rotation < -15)					
+							rod.rotation += Main.keysheld[Keyboard.SHIFT] ? 15 : 15;
+						else
 							rod.rotation = -15;
-						}
+						
+						rod.release();
+							
+						if (rod.line.freed == rod.line.segments - 1 || rod.lure.oceanY >= 2)
+							setState(IDLE);
 						break;
 				}
 			}

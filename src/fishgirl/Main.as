@@ -146,6 +146,7 @@
 		
 		private function updateFrame(e:Event = null):void
 		{
+			Actor.nActors = 0;
 			nframes++;
 			game.ticksInState++;
 			world.update();
@@ -154,6 +155,8 @@
 			for each (var a:Actor in actors) {
 				a.update();
 			}
+			
+			world.camera.dbg.text = Actor.nActors + " actors updated"; Actor.nActors = 0;
 			
 			switch(game.state) {
 				case GameState.CASTING:
@@ -165,7 +168,7 @@
 						setState(GameState.READY_TO_CAST);
 					break;
 				case GameState.FISHING:
-					if(buttonIsDown && (game.ticksInState%4==0))
+					if(buttonIsDown && (game.ticksInState%2==0))
 						world.player.rod.line.pullLine();
 					var lure:Lure = world.player.rod.lure;
 					if (world.player.rod.isReeledIn()) {
