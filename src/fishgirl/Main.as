@@ -37,6 +37,14 @@
 			else addEventListener(Event.ADDED_TO_STAGE, init);						
 		}
 		
+		public function handleMouseDown(e:MouseEvent = null) :void {
+			buttonPressed();
+		}
+		
+		public function handleMouseUp(e:MouseEvent = null) :void {
+			buttonReleased();
+		}
+		
 		public function handleKeyDown(e:KeyboardEvent = null) :void {
 			if (keysheld[Keyboard.F12]) trace("down " + e.keyCode);
 			
@@ -124,6 +132,8 @@
 			
 			stage.addEventListener(KeyboardEvent.KEY_DOWN, handleKeyDown);
 			stage.addEventListener(KeyboardEvent.KEY_UP, handleKeyUp);
+			stage.addEventListener(MouseEvent.MOUSE_DOWN, handleMouseDown);
+			stage.addEventListener(MouseEvent.MOUSE_UP, handleMouseUp);
 
 			actors = [];
 
@@ -156,7 +166,7 @@
 				a.update();
 			}
 			
-			world.camera.dbg.text = Actor.nActors + " actors updated"; Actor.nActors = 0;
+			//world.camera.dbg.text = Actor.nActors + " actors updated"; Actor.nActors = 0;
 			
 			switch(game.state) {
 				case GameState.CASTING:
