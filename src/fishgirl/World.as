@@ -20,6 +20,7 @@
 		public function World() 
 		{
 			Fish.world = this;
+			InfoDisplay.world = this;
 			
 			backdrop = new Backdrop();
 			addActor(backdrop);

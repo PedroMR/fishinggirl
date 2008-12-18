@@ -6,6 +6,8 @@
 	import flash.events.KeyboardEvent;
 	import flash.events.MouseEvent;
 	import flash.events.TimerEvent;
+	import flash.geom.Point;
+	import flash.geom.Rectangle;
 	import flash.text.TextField;
 	import flash.ui.Keyboard;
 	import flash.utils.setInterval;
@@ -186,7 +188,15 @@
 						var fish:Fish = lure.fish;
 						if (fish) {
 							game.points += fish.score;
-							fish.disappear();
+							world.addActor(fish);
+							fish.rotation = 0;
+							fish.targetRotation = 0;
+							world.groupie.setState(Bear.LOVING);
+							var rect:Rectangle = world.groupie.getBounds(world);
+							fish.x = rect.left+rect.width/2-fish.width/2;
+							fish.y = rect.top - fish.height - 5;
+							fish.disappear();							
+							InfoDisplay.show("+" + fish.score, world.localToGlobal(new Point(rect.left + rect.width/2, fish.y - fish.height)));
 						}
 						setState(GameState.READY_TO_CAST);
 					}

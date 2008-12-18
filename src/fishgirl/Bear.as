@@ -2,6 +2,7 @@
 {
 	import flash.display.DisplayObject;
 	import flash.display.Sprite;
+	import flash.geom.Rectangle;
 	
 	/**
 	 * ...
@@ -24,7 +25,10 @@
 		
 		public var state:uint;
 		
+		protected var ticksInState:uint;
+		
 		internal var heart:DisplayObject;
+		internal var speechBubble:Sprite;
 		
 		public function Bear(type:uint)
 		{
@@ -41,22 +45,45 @@
 				sprite.x = -sprite.width / 2;
 				sprite.y = -sprite.height;
 			}
-				
-			heart = new DancGraphics.heart();
-			heart.y = - sprite.height - 20;
-			heart.x = - heart.width/2;
-			heart.visible = false;
-			addChild(heart);
+
+			var rect:Rectangle = sprite.getBounds(this);
 			
-			state = IDLE;
+			speechBubble = new DancGraphics.speechBubble();
+			speechBubble.y = rect.top - speechBubble.height - 10;
+			speechBubble.x = rect.left - 14;
+			//addChild(speechBubble);		
+			
+			heart = new DancGraphics.heart();
+			heart.y = rect.top - heart.height - 5;
+			heart.x = rect.left + rect.width/2 - heart.width/2;
+			heart.visible = false;			
+			addChild(heart);
+						
+			setState(IDLE);
 		}
 		
 		public function setState(state:uint) : void {
+			ticksInState = 0;
 			this.state = state;
 			
-			heart.visible = (state == LOVING);			
-		}
+			heart.visible = (state == LOVING);
+			
+			if (state == LOVING) {
 				
+			}
+		}
+		
+		
+		public override function update() : void {
+			super.update();
+			ticksInState++;
+			
+			if (state == LOVING) {
+				heart.scaleX = heart.scaleY = 1 + 0.2 * Math.sin(ticksInState/4);
+				if (ticksInState > 100)
+					setState(IDLE);
+			}
+		}
 	}
 	
 }

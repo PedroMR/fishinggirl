@@ -15,6 +15,9 @@
 		}
 		
 		public function addActor( a : Actor ) : void {
+			if (a.container != null) {
+				a.container.delActor(a);
+			}
 			addChild(a);
 			actors.push(a);
 			a.container = this;
@@ -29,6 +32,7 @@
 		}
 		
 		public override function update() : void {
+			tick++;
 			for each( var a:Actor in actors ) {
 				a.update();
 			}

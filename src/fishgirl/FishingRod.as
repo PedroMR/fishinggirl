@@ -62,7 +62,17 @@
 			lure.x = line.lureX; lure.y = line.lureY;
 			var pt:Point = ocean.globalToLocal(localToGlobal(new Point(lure.x, lure.y)));
 			lure.oceanX = pt.x; lure.oceanY = pt.y;
-			if (lure.oceanY > 10) lure.thrown = true;
+			if (!lure.thrown && lure.oceanY > 10 && lure.oceanX > 0 && Main.game.state == GameState.FISHING) {
+				lure.thrown = true;
+				//pt.y = -110;
+				pt.y = 60;
+				//pt.x -= 50;
+				pt = ocean.localToGlobal(pt);
+				var meters:Number = (lure.x) / 120;
+				InfoDisplay.show("Reached " + meters.toFixed(1)+"m!", pt);
+			}
+			
+			if (Main.keysheld[77]) lure.setSize((lure.size + 1) % Fish.VERY_LARGE);
 		}
 		
 		public function release():void {

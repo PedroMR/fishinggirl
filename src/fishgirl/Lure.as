@@ -27,13 +27,13 @@
 		}
 		
 		public function setSize(size:uint):void {
-			thrown = false;
 			if (spr != null) {
 				removeChild(spr);
 				spr = null;
 			}
 			this.size = size;
 			if (size != NONE) {
+				thrown = false;
 				fish = null;
 				spr = new (gfx[size] as Class)();
 				if (size == Fish.SMALL) {

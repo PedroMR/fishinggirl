@@ -47,9 +47,10 @@
 		[Embed(source = '../../res/FishingGirl.swf', symbol = 'lureMedium')] public static var lureMedium:Class;
 		[Embed(source = '../../res/FishingGirl.swf', symbol = 'lureLarge')] public static var lureLarge:Class;
 		[Embed(source = '../../res/FishingGirl.swf', symbol = 'lureBomb')] public static var lureBomb:Class;
-		[Embed(source = '../../res/FishingGirl.swf', symbol = 'SpeachBubble')] public static var SpeachBubble:Class;
+		[Embed(source = '../../res/FishingGirl.swf', symbol = 'SpeachBubble')] public static var speechBubble:Class;
 		
 		[Embed(source = '../../res/FishingGirl.swf', symbol = 'airBubble')] public static var airBubble:Class;
+		[Embed(source = '../../res/FishingGirl.swf', symbol = 'storeCapsule')] public static var storeCapsule:Class;
 		
 		[Embed(source = '../../res/FishingGirl.swf', symbol = 'topper2x1')] public static var topper2x1:Class;
 		[Embed(source = '../../res/FishingGirl.swf', symbol = 'topper1x1')] public static var topper1x1:Class;

@@ -70,7 +70,7 @@
 			//sprite.x = -sprite.width / 2;
 			//if (size == MEDIUM) sprite.x = -sprite.width;
 			//else if (size == LARGE) sprite.x = -sprite.width / 2;
-			sprite.y = 0//-sprite.height / 2;
+			//sprite.y = -sprite.height / 2;
 			addChild(sprite);
 			
 			setVelocity(0, 0);
@@ -88,6 +88,7 @@
 			switch(state) {
 				case IDLE:
 					targetRotation = 0;
+					vx = vy = 0;
 					sprite.scaleX = sprite.scaleX < 0 ? -1 : 1;
 					break;
 				case WATCHING:
@@ -143,13 +144,13 @@
 				updateChase();
 				break;
 			case DISAPPEARING:
-				sprite.alpha -= 0.03;
+				sprite.alpha -= 0.008;
 				if (sprite.alpha <= 0) {
 					container.delActor(this);
 				}
-				vy = -8;
+				vy = 0;
 				vx = 0;
-				scaleY = scaleX = scaleY + 0.05;
+				//scaleY = scaleX = scaleY + 0.05;
 				super.update();
 				break;
 			case CAUGHT:
@@ -306,6 +307,7 @@
 		}
 		
 		public function disappear() : void {
+			alpha = 2;
 			setState(DISAPPEARING);
 		}
 		

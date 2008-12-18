@@ -36,6 +36,11 @@
 				if ((i + 1) % (Fish.NUM_TYPES_PER_SIZE - 1) == 0)
 					num--;
 			}
+			
+			// no small lure store
+			for (i = 1; i < StoreCapsule.NUM_TYPES; i++ ) {
+				addActor(new StoreCapsule(i));
+			}
 				
 			//graphics.beginFill(0x000040);
 //			var mat:Matrix = new Matrix(); mat.rotate(Math.PI / 2);
@@ -62,7 +67,7 @@
 			f.x = r * 2 * amp + MIN_X + amp * (f.type%Fish.NUM_TYPES_PER_SIZE);
 			//f.x = (r < 0.5) ? MIN_X-2000*r : MAX_X+2000*(r-0.5);
 			f.y = depth;
-			trace( "type " + f.type + " at " + [f.x, f.y]);
+			//trace( "type " + f.type + " at " + [f.x, f.y]);
 			f.chooseTarget();
 		}
 		
@@ -70,9 +75,10 @@
 			super.update();
 						
 			// update water
-			if (tick % 16*4096 == 0) 
+			if (tick % 4096*4096 == 0) 
 			{
-				//addActor(new Bubble(Math.random() * (MAX_X - MIN_X) + MIN_X, Math.random() * 200 + MAX_DEPTH));
+				trace('tick ' + tick);
+				addActor(new Bubble(Math.random() * (MAX_X - MIN_X) + MIN_X, Math.random() * 200 + MAX_DEPTH));
 			}
 		}
 	}
